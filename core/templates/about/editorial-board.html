@@ -1,0 +1,54 @@
+{% if editor_in_chief %} 
+<div class="mb-20">
+    <div class="text-2xl">Editor-in-Chief</div>
+    {% for editor in editor_in_chief %}
+        <div class="mt-5">
+            {% include "blocks/editor.html" %}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if managing_editor %} 
+<div class="mb-20">
+    <div class="text-2xl">Managing Editor</div>
+    {% for editor in managing_editor %}
+        <div class="mt-5">
+            {% include "blocks/editor.html" %}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if associate_editor %} 
+<div class="mb-20">
+    <div class="text-2xl">Associate Editors</div>
+    {% for editor in associate_editor %}
+        <div class="mt-5">
+            {% include "blocks/editor.html" %}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if advisory_board_member %} 
+<div class="mb-20">
+    <div class="text-2xl">Advisory Board Members</div>
+    {% for editor in advisory_board_member %}
+        <div class="mt-5">
+            {% include "blocks/editor.html" %}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if editorial_board_member %} 
+<div class="mb-20">
+    <div class="text-2xl">Editorial Board Members</div>
+    {% for editor in editorial_board_member %}
+        <div class="mt-5">
+            {% include "blocks/editor.html" %}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}

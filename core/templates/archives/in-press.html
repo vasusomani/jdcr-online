@@ -1,0 +1,28 @@
+{% extends "_base.html" %}
+
+{% block pagetitle %}Articles In-Press{% endblock %}
+
+{% block content %}
+<div class="container py-10 min-h-screen">
+    <div class="mt-5 grid grid-cols-1 lg:grid-cols-3">
+        <div class="col-span-1">
+          <div class="sticky top-48">
+              <div class="text-xl lg:text-4xl">Articles In-Press</div>
+              <div class="flex items-center text-primary underline-offset-4 hover:underline cursor-pointer" onclick="location.href='{% url "archives" %}'">
+                View All Archives
+                <i data-feather="arrow-up-right" class="w-4"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-1 lg:col-span-2">
+            {% if articles %}
+            {% for article in articles %}
+                {% include "blocks/article-list.html" %}
+            {% endfor %}
+            {% else %}
+            <div class="">No Articles</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

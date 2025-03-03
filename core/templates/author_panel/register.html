@@ -1,0 +1,111 @@
+{% extends "_base_content.html" %} 
+{% load static %} 
+
+
+{% block pagetitle %}Author Register{% endblock %} 
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 h-full">
+    <div class="hidden md:block col-span-1 bg-primary">
+        <div class="flex justify-center items-center flex-col h-full w-full">
+            <div class="max-w-md text-6xl text-light">{{ journal.name }}</div>
+        </div>
+    </div>
+    <div class="col-span-1">
+        <div class="flex justify-center w-full h-full">
+            <div class="flex justify-center items-center flex-col h-full w-80">
+                <div class="text-gray-500 text-2xl">Sign Up</div>
+                <div class="mt-2 mb-6 text-sm text-left">Already have an account? <a href="{% url 'author-login' %}" class="text-blue-600">Login</a></div>
+                {% include "_messages.html" %}
+                <form class="mt-5 w-80" method="POST" id="register-form">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">First Name</label>
+                        <input type="text" id="first_name" name="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Last Name</label>
+                        <input type="text" id="last_name" name="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="designation" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Designation</label>
+                        <input type="text" id="designation" name="designation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Your email</label>
+                        <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Password</label>
+                        <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="password2" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Confirm password</label>
+                        <input type="password" id="password2" name="password2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <div id="password2-helper" class="text-red-500 text-sm mt-2 hidden">Passwords do not match!</div>
+                    </div>
+                    
+                    <label class="relative inline-flex items-center mb-6 cursor-pointer">
+                        <input type="checkbox" id="tnc-checkbox" value="" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                        <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">I agree to the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</span>
+                    </label>
+                    <div class="flex justify-center mb-6">
+                        <button id="submit-btn" type="submit" class="text-white cursor-pointer bg-gray-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" disabled>Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block customjs %}
+{{ block.super }}
+<script>
+    const submitBtn = document.getElementById("submit-btn");
+    const checkbox = document.getElementById('tnc-checkbox')
+
+    checkbox.addEventListener('change', (event) => {
+        if (event.currentTarget.checked) {
+            submitBtn.removeAttribute("disabled");
+            submitBtn.classList.remove("bg-gray-400")
+            submitBtn.classList.add("bg-primary")
+            submitBtn.classList.add("hover:bg-primaryHover")
+        } else {
+            submitBtn.setAttribute("disabled", true);
+            submitBtn.classList.add("bg-gray-400")
+            submitBtn.classList.remove("bg-primary")
+            submitBtn.classList.remove("hover:bg-primaryHover")
+        }
+    }) 
+
+    $(document).ready(function() {
+        console.log("Ready")
+
+        $("#password2").on("change", function() {
+            const password = $("#password").val();
+            if (password !== $(this).val()) {
+                $("#password2-helper").removeClass("hidden");
+            }
+            else {
+                $("#password2-helper").addClass("hidden");
+            }
+        });
+
+        $("#register-form").on("submit", function(e){
+            e.preventDefault();
+            const password = $("#password").val();
+            const password2 = $("#password2").val();
+            if (password !== password2) {
+                $("#password2-helper").removeClass("hidden");
+                return false;
+            }
+            else {
+                $("#password2-helper").addClass("hidden");
+            }
+            $(this).unbind("submit").submit();
+        })
+    })
+</script>
+{% endblock %}

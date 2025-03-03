@@ -1,0 +1,54 @@
+{% load static %}
+{% load solo_tags %}
+
+{% comment %} <div class="fixed z-50 bottom-24 right-6">
+    <a aria-label="Chat on WhatsApp" href="https://wa.me/918082900629" target="_blank">
+      <img alt="Chat on WhatsApp" src="{% static 'images/icons/whatsapp.png' %}" class="w-14 rounded-full shadow-md"/>
+    <a />
+</div> {% endcomment %}
+
+<div class="bg-gray-900 text-gray-300">
+    <div class="container py-5 lg:py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-5">
+            <div class="col-span-1">
+                <div class="bg-gray-800 p-5">
+                    <div class="font-light text-3xl text-gray-400">{{ journal.name }}</div>
+                    <div class="flex space-x-2 text-sm">
+                        <div class="text-gray-500">Open Access</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-1">
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'about-us' %}">About Us</a></li>
+                    <li><a href="{% url 'contact-us' %}">Contact Us</a></li>
+                    <li><a href="{% url 'faq' %}">Frequently Asked Questions</a></li>
+                    <li><a href="{% url 'about' about_type='announcements' %}">Announcements</a></li>
+                </ul>
+            </div>
+            <div class="col-span-1">
+                <ul>
+                    <li><a href="{% url 'payments' %}">Online Payments</a></li>
+                    <li><a href="{% url 'insights' %}">Journal Insight</a></li>
+                    {% for p in policies|slice:"0:3" %}
+                        <li><a href="{% url 'policy' url=p.url %}">{{ p.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-span-1">
+                <ul>
+                    <li><a href="{% url 'privacy-policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'terms-and-conditions' %}">Terms and Conditions</a></li>
+                    <li><a href="{% url 'copyright' %}">Copyright</a></li>
+                    <li><a href="{% url 'cookie-preference' %}">Cookie Preference</a></li>
+                    <li><a href="{% url 'django.contrib.sitemaps.views.sitemap' %}">Sitemap</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-center items-center py-2 text-sm">
+        {% get_solo 'core.SiteConfig' as site_config %}
+        &copy; Copyright <script>document.write(new Date().getFullYear())</script> {{ site_config.footer_copyright }}
+    </div>
+</div>

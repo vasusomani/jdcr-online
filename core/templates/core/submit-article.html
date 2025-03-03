@@ -1,0 +1,80 @@
+{% extends "_base.html" %}
+
+{% block pagetitle %}Submit Article {% endblock %}
+
+{% block content %}
+<div class="container min-h-screen py-5 lg:py-10 mb-20">
+    <div class="text-2xl lg:text-4xl font-light">Article Submission Process</div>
+
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div class="col-span-1">
+            <div class="h-full p-5 border bg-primary text-light flex flex-col justify-start items-start">
+                <div class="flex-grow">
+                    <div class="text-2xl font-medium">Submission via Online Submission Portal</div>
+                    <div class="mt-5">
+                        <div class="">Authors are encouraged to submit their articles through our dedicated submission portal.</div>
+                        
+                        <ol class="mt-3 list-decimal list-inside space-y-2">
+                            <li><span class="font-medium">Efficiency and Speed</span>: Scholar Manuscript streamlines the submission process, minimizing administrative delays and providing authors with a swift and efficient route to submit their work.</li>
+                            <li><span class="font-medium">Real-Time Tracking</span>: Authors can easily monitor the status of their submission in real-time, from the initial submission through the review process. This ensures transparency and minimizes uncertainty.</li>
+                            <li><span class="font-medium">Enhanced Communication</span>: The portal serves as a centralized platform for communication between authors and the editorial team, fostering clear and direct communication. This reduces the likelihood of miscommunication.</li>
+                        </ol>
+                        
+                    </div>
+                </div>
+                <div class="mt-5 px-5 py-2 bg-white text-primary inline-block font-medium cursor-pointer hover:bg-primaryHover hover:text-light shadow-xl submit-article-sm" onclick="location.href='{% url "author-article-submission" %}'">SUBMIT NOW</div>
+            </div>
+        </div>
+        <div class="col-span-1">
+            <div class="h-full p-5 border flex flex-col justify-start items-start">
+                <div class="flex-grow">
+                    <div class="text-black text-2xl font-medium">Submission through Email</div>
+                    <div class="mt-5">
+                        <div class="">Authors facing challenges with our dedicated submission portal may opt for email submission.</div>
+                        <ol class="list-decimal list-inside mt-5">
+                            <li><span class="font-medium">Flexibility for Authors</span>: While email submission offers flexibility, it lacks the streamlined efficiency of the submission portal, potentially leading to delays in processing.</li>
+                            <li><span class="font-medium">Limited Tracking</span>: Unlike the real-time tracking available in the portal, email submissions may lack a comprehensive tracking system, causing uncertainty about the status of the manuscript.</li>
+                            <li><span class="font-medium">Potential Communication Barriers</span>: Email submissions may result in scattered communication, increasing the risk of miscommunication and delays.</li>
+                        </ol>
+
+                        <div class="my-5">
+                            <span class="font-medium">NOTE</span>: Kindly attach your article as a single PDF file to the email for smoother processing.
+                        </div>
+                    </div>
+                </div>
+                <a href='mailto:submission@jdcronline.org' class="inline mt-5 px-5 py-2 bg-primary text-light font-medium cursor-pointer hover:bg-primaryHover hover:text-light shadow-xl submit-article-email">submission@jdcronline.org</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div class="col-span-1">
+            <div class="font-medium text-xl">Before submitting your manuscript, please ensure the following:</div>
+
+            <ul class="mt-3 list-disc list-inside space-y-2">
+                <li>Maintain overall plagiarism under 30%, with no more than 3% from a single source.</li>
+                <li>Confirm that the manuscript is neither published nor under consideration elsewhere.</li>
+                <li>Familiarize yourself with our Aim and Scope.</li>
+                <li>Review the Guide for Authors provided.</li>
+                <li>Understand and adhere to our Open Access Policy.</li>
+                <li>Familiarize yourself with our Copyrights Policy.</li>
+            </ul>
+        </div>
+
+        <div class="col-span-1">
+            <div class="font-medium text-xl">{{ journal.name }} adheres to ethical guidelines, including:</div>
+
+            <ul class="mt-3 list-disc list-inside space-y-2">
+                <li>Policy Statement on Ethical Guidelines by the American Mathematical Society</li>
+                <li>Best Current Practices from the Journals of the International Mathematical Union</li>
+                <li>Code of Practice by the European Mathematical Society (EMS) Ethics Committee</li>
+                <li>EMS Ethics Committee Comments on the EMS Code of Practice</li>
+                <li>Guidelines by the Committee on Publication Ethics (COPE)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="mt-10">For any inquiries, please refer to our FAQ section or contact us at <span class="text-primary">support@jdcronline.org</span>.</div>
+</div>
+{% endblock %}

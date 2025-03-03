@@ -1,0 +1,38 @@
+{% load static %}
+<div class="flex h-full flex-col border border-gray-100 bg-gray-50">
+    <div class="flex-grow p-3">
+        <div class="text-sm text-gray-400">{{ article.article_type }}</div>
+        <div class="text-xl cursor-pointer underline-offset-4 hover:underline hover:text-primary transition-all duration-200" onclick="location.href='{% url "article" url=article.url %}'">{{ article.title }}</div>
+        <div class="mt-1 flex flex-wrap">
+            {% for author in article.authors.all %}
+                {% if forloop.first %}
+                    <div class="author-link text-gray-500 author-link cursor-pointer underline-offset-4 hover:text-primary hover:underline" data-author-id="{{ author.id }}">{% include "blocks/author-name.html" %}{% if not forloop.last %},&nbsp;{% endif%}</div>
+                {% elif forloop.last %}
+                    <div class="author-link text-gray-500 author-link cursor-pointer underline-offset-4 hover:text-primary hover:underline" data-author-id="{{ author.id }}">{% include "blocks/author-name.html" %}{% if not forloop.last %},&nbsp;{% endif%}</div>
+                {% else %}
+                    {% if forloop.counter == 2 %}
+                        <span>...</span>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% if article.is_in_press and article.available_on %}
+        <div class="text-gray-500">Available On: {{ article.available_on|date:"d/m/Y" }}</div>
+        {% elif not article.is_in_press and article.published %}
+        <div class="text-gray-500">Published: {{ article.published|date:"d/m/Y" }}</div>
+        {% endif %}
+    </div>
+
+    <div class="flex justify-start items-center border-t border-t-gray-100 space-x-3">
+        {% comment %} <div data-article-id="{{ article.pk }}" class="download-pdf-modal-open py-3 px-5 text-sm flex justify-start items-center text-primary underline-offset-4 hover:underline cursor-pointer">
+            <img src="{% static 'images/icons/pdf.png' %}" class="w-5 mr-2" alt="pdf"> Download
+        </div> {% endcomment %}
+        <a href="{% if article.pdf %}{% url 'article-pdf-download' article_id=article.id %}{% else %}#{% endif %}" class="py-3 px-5 text-sm flex justify-start items-center text-primary underline-offset-4 hover:underline cursor-pointer">
+            <img src="{% static 'images/icons/pdf.png' %}" class="w-5 mr-2" alt="pdf"> Download
+        </a>
+        
+        <a href="{% url 'article' url=article.url %}" class="w-full p-3 text-sm flex justify-start items-center text-primary underline-offset-4 hover:underline cursor-pointer">
+            Read Article <i data-feather="arrow-up-right" class="w-4"></i>
+        </a>
+    </div>
+</div>

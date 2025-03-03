@@ -1,0 +1,8 @@
+{% if ads.ad_space_1 %}
+<div class="mt-10">
+    <div class="text-center w-full mt-2 text-xs text-gray-600 font-medium">Advertisement</div>
+    <div class="flex justify-center">
+        <img alt="Loading Image..." src="{{ ads.ad_space_1.url }}" class="w-full cursor-pointer" onclick="location.href='{% if ads.ad_space_1_link %}{{ ads.ad_space_1_link }}{% else %}#{% endif%}'"/>
+    </div>
+</div>
+{% endif %}

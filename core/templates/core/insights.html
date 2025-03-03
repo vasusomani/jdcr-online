@@ -1,0 +1,100 @@
+{% extends "_base.html" %}
+
+{% block pagetitle %}Insights {% endblock %}
+
+{% block content %}
+<div class="container py-5 lg:py-10 mb-20">
+    <div class="text-2xl lg:text-4xl font-light">Journal Insights</div>
+
+    <div class="mt-5 lg:mt-10 py-8 grid grid-cols-4 border-t border-t-gray-300">
+        <div class="col-span-1 font-light lg:text-2xl">Aim &amp; Scope</div>
+        <div class="col-span-3">
+            {{ journal.aim_and_scope|safe }}
+        </div>
+    </div>
+
+    {% if journal.issn_online or journal.issn_print %}
+    <div class="py-8 grid grid-cols-4 border-t border-t-gray-300">
+        <div class="col-span-1 font-light lg:text-2xl">ISSN</div>
+        <div class="col-span-3">
+            {% if journal.issn_print %}
+            Print ISSN: {{ journal.issn_print }}
+            {% endif %} | 
+            {% if journal.issn_online %}
+            Online ISSN: {{ journal.issn_online }}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if journal.impact_factor or journal.cite_score %}
+    <div class="py-8 grid grid-cols-4 border-t border-t-gray-300">
+        <div class="col-span-1 font-light lg:text-2xl">Impact</div>
+        <div class="col-span-3">
+            <div class="grid grid-cols-1 lg:grid-cols-4">
+                {% if journal.impact_factor %}
+                <div class="col-span-1 border-l-2 border-l-primary px-5 py-2">
+                    <div class="text-3xl">{{ journal.impact_factor }}</div>
+                    <div class="text-gray-500">Impact Factor</div>
+                </div>
+                {% endif %}
+                {% if journal.cite_score %}
+                <div class="col-span-1 border-l-2 border-l-primary px-5 py-2">
+                    <div class="text-3xl">{{ journal.cite_score }}</div>
+                    <div class="text-gray-500">Cite Score</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if journal.acceptance_rate or journal.first_decision or journal.review_time or journal.acceptance_to_publication %}
+    <div class="py-8 grid grid-cols-4 border-t border-t-gray-300">
+        <div class="col-span-1 font-light lg:text-2xl">Publishing Timeline</div>
+        <div class="col-span-3">
+            <div class="grid grid-cols-1 lg:grid-cols-4">
+                {% if journal.acceptance_rate %}
+                <div class="col-span-1 border-l-2 border-l-primary px-5 py-2">
+                    <div class="text-3xl">{{ journal.acceptance_rate }}%</div>
+                    <div class="text-gray-500">Acceptance Rate</div>
+                </div>
+                {% endif %}
+                {% if journal.first_decision %}
+                <div class="col-span-1 border-l-2 border-l-primary px-5 py-2">
+                    <div class="text-3xl">{{ journal.first_decision }} days</div>
+                    <div class="text-gray-500">Time to first decision</div>
+                </div>
+                {% endif %}
+                {% if journal.review_time %}
+                <div class="col-span-1 border-l-2 border-l-primary px-5 py-2">
+                    <div class="text-3xl">{{ journal.review_time }} days</div>
+                    <div class="text-gray-500">Review time</div>
+                </div>
+                {% endif %}
+                {% if journal.acceptance_to_publication %}
+                <div class="col-span-1 border-l-2 border-l-primary px-5 py-2">
+                    <div class="text-3xl">{{ journal.acceptance_to_publication }} days</div>
+                    <div class="text-gray-500">Acceptance to publication</div>
+                </div>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="py-8 grid grid-cols-4 border-t border-t-gray-300" id="indexing">
+        <div class="col-span-1 font-light lg:text-2xl">Abstracting and Indexing</div>
+        <div class="col-span-1 lg:col-span-3">
+            {% if indexings %}
+            <ul class="list-disc list-inside">
+            {% for index in indexings %}
+                <li class="cursor-pointer underline-offset-4 hover:underline hover:text-primary" {% if index.link %}onclick="location.href='{{index.link}}'"{% endif %}>{{ index.name }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

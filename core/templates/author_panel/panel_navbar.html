@@ -1,0 +1,27 @@
+{% load static %}
+
+<div class="w-screen bg-[#fff] border-b border-b-gray-200 shadow">
+    <div class="p-5 flex justify-between items-center">
+        <div class="flex justify-start items-center flex-grow">
+            <div class="text-xl hidden md:block">{{ journal.name }}</div>
+        </div>
+        <div class="mr-5 text-primary underline-offset-4 hover:underline cursor-pointer" onclick="location.href='{% url "home" %}'">Visit Website</div>
+        <div class="">
+            <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class=" bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">{{ request.user.email }} <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+              </svg></button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+                  <li>
+                    <a href="{% url 'author-change-password' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Change Password</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'author-logout' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Log out</a>
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

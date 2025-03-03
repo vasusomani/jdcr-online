@@ -1,0 +1,46 @@
+<div class="mb-5 text-md flex justify-start items-center group underline-offset-4 hover:underline cursor-pointer hover:decoration-primary" onclick="location.href='{% url "about" about_type="aim-and-scope"  %}'">
+    <i data-feather="chevron-right" class="text-primary"></i> Aim and Scope
+</div>
+<div class="mb-5 text-md flex justify-start items-center group underline-offset-4 hover:underline cursor-pointer hover:decoration-primary" onclick="location.href='{% url "about" about_type="editorial-board"  %}'">
+    <i data-feather="chevron-right" class="text-primary"></i> Editorial Board
+</div>
+<div class="mb-5 text-md flex justify-start items-center group underline-offset-4 hover:underline cursor-pointer hover:decoration-primary" onclick="location.href='{% url "about" about_type="news"  %}'">
+    <i data-feather="chevron-right" class="text-primary"></i> News 
+</div>
+<div class="mb-5 text-md flex justify-start items-center group underline-offset-4 hover:underline cursor-pointer hover:decoration-primary" onclick="location.href='{% url "about" about_type="announcements"  %}'">
+    <i data-feather="chevron-right" class="text-primary"></i> Announcements 
+</div>
+
+{% if about_type == "news" and news %}
+<div class="mt-10 lg:mt-16">
+    {% for n in news %}
+    <div class="">
+        <div class="flex justify-start items-center w-full">
+            <div class="w-20 bg-primary" style="height: 1px"></div>
+            <div class="flex-grow bg-gray-200" style="height: 1px"></div>
+        </div>
+        <div class="py-10 pr-10">
+            <div class="text-sm">{{ n.created_on|date:"j M, Y" }}</div>
+            <div class="hover:text-cyan-700 cursor-pointer underline-offset-4 hover:underline" onclick="location.href='#news{{n.id}}'">{{ n.heading }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if about_type == "announcements" and announcements %}
+<div class="mt-10 lg:mt-16">
+    {% for a in announcements %}
+    <div class="">
+        <div class="flex justify-start items-center w-full">
+            <div class="w-20 bg-primary" style="height: 1px"></div>
+            <div class="flex-grow bg-gray-200" style="height: 1px"></div>
+        </div>
+        <div class="py-10 pr-10">
+            <div class="text-sm">{{ a.created_on|date:"j M, Y" }}</div>
+            <div class="hover:text-cyan-700 cursor-pointer underline-offset-4 hover:underline" onclick="location.href='#announcements{{a.id}}'">{{ a.heading }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+
+{% block pagetitle %}Archives{% endblock %}
+
+{% block content %}
+<div class="container py-10 min-h-screen">
+    <div class="mt-5 grid grid-cols-1 lg:grid-cols-3">
+        <div class="col-span-1">
+            <div class="text-xl lg:text-4xl">{{ volume.name }} {{ issue.name }}</div>
+            <div class="">{{ issue.month }} {{ volume.year }}</div>
+            {% include "blocks/ad-space-2.html" %}
+        </div>
+        <div class="col-span-1 lg:col-span-2">
+            {% if articles %}
+            {% for article in articles %}
+                {% include "blocks/article-list.html" %}
+            {% endfor %}
+            {% else %}
+            <div class="">No Articles</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% load compress %} 
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block metatags %}
+    <meta property="og:site_name" content="Journal of Dermatological Case Reports"/>
+    <meta property="og:url" content="https://jdcronline.org/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Journal of Dermatological Case Reports"/>
+    <meta property="og:image" content="https://jdcronline.org/static/favicon/apple-touch-icon.png" />
+    <meta property="og:description" content="Journal of Dermatological Case Reports is an academic journal. The journal publishes majorly in the area(s): Trichoscopy & Psoriasis. It has an ISSN identifier of 1898-7249. Over the lifetime, 248 publications have been published receiving 2852 citations. Our primary aim is to provide a platform for dermatologists, researchers, and clinicians …"/>
+    {% endblock %}
+    <title>{% block pagetitle %}{% endblock %} | Journal of Dermatological Case Reports</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
+    {% block extrajs %}{% endblock %}
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% endcompress %}
+    {% block extraCSS %}{% endblock %}
+
+    <!--Start of Tawk.to Script-->
+    <script>
+      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+      (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/603bc8eb385de407571af2eb/1evkohmq3';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+      })();
+    </script>
+    <!--End of Tawk.to Script-->
+    {% include 'google_tags/head.html' %}
+  </head>
+ 
+  <body class="overflow-y-scroll overflow-x-hidden">
+
+    {% include 'google_tags/body.html' %}
+
+    {% include "_navbar.html" %} 
+
+    {% include "modals/modals.html" %}
+
+    <div>
+      {% block banners %}{% endblock banners %}
+      <div class="transition-all duration-300 -z-10">  
+        {% block content %} {% endblock content %}
+      </div>
+    </div>
+    {% include "_footer.html" %}
+
+
+    {% block customjs %}
+    <script>
+      feather.replace();
+    </script>
+    {% endblock customjs%}
+
+  </body>
+</html>

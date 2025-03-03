@@ -1,0 +1,11 @@
+{% if news %}
+{% for n in news %}
+<div class="border-b p-5 lg:p-12" id="news{{ n.id }}">
+    <div class="">{{ n.created_on|date:"j M, Y" }}</div>
+    <div class="mt-2 font-medium">{{ n.heading }}</div>
+    <div class="mt-2">{{ n.content|safe }}</div>
+</div>
+{% endfor %}
+{% else %}
+<div class="text-gray-500 p-5 lg:p-12">No news but stay tuned!.</div>
+{% endif %}

@@ -1,0 +1,162 @@
+{% load static %}
+{% load solo_tags %}
+
+<div class="hidden md:block w-screen bg-gray-900">
+    <div class="container">
+        <div class="flex justify-end items-center space-x-3 text-gray-200 py-1 text-sm">
+            {% get_solo 'core.SiteConfig' as site_config %}
+            {% if site_config.phone %}
+            <div class="flex items-center space-x-1">
+                <img src="{% static 'images/icons/whatsapp.png' %}" class="w-4"/>
+                <div class="">{{ site_config.phone }}</div>
+            </div>
+            {% endif %}
+            {% if site_config.whatsapp %}
+            <div class="flex items-center space-x-1">
+                <img src="{% static 'images/icons/telephone.png' %}" class="w-4"/>
+                <div class="">{{ site_config.whatsapp }}</div>
+            </div>
+            {% endif %}
+            {% if site_config.submission_email %}
+            <div class="flex items-center space-x-1">
+                <img src="{% static 'images/icons/mail.png' %}" class="w-4"/>
+                <div class="">{{ site_config.submission_email }}</div>
+            </div>
+            {% endif %}
+            <div class="text-lg">|</div>
+            <div class="cursor-pointer hover:underline" onclick="location.href='{% url "faq" %}'">FAQs</div>
+        </div>
+    </div>
+</div>
+<nav
+  class="bg-primary bg-opacity-20 text-white top-0 w-full"
+>
+    <div class="container">
+        <div class="py-5 md:py-10 flex justify-between items-center space-x-4">
+            <!-- Brand name -->
+            <h1 class="text-2xl md:text-5xl max-w-screen-md text-primary cursor-pointer" onclick="location.href='{% url "home" %}'">
+                {% if journal.name %}{{ journal.name }}{% endif %}
+            </h1>
+            <!-- Search bar -->
+            <input id="navbarSearch" type="text" placeholder="Search" class="hidden md:block px-4 py-2 bg-white text-gray-500 focus:outline-0 focus:border-0 border-0 min-w-screen-md focus:w-96 transition-all duration-500">
+            {% comment %} <div class=""><i data-feather="grid"></i></div> {% endcomment %}
+            <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                </svg>
+            </button>
+        </div>
+        
+    </div>
+
+    <div>
+        <div class="hidden md:block w-full md:bg-primary" id="navbar-dropdown">
+            <div class="md:container">
+                <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
+                    <li>
+                        <a href="{% url 'home' %}" class="block py-2 px-3 md:px-6 text-gray-900 bg-gray-50 md:bg-transparent md:text-white md:hover:bg-primaryHover border-l border-l-primaryHover border-r border-r-primaryHover" aria-current="page">Home</a>
+                    </li>
+                    <li>
+                        <button id="aboutDropdownLink" data-dropdown-toggle="aboutDropdown" data-dropdown-trigger="hover" data-dropdown-offset-skidding="60" class="flex items-center justify-between w-full py-2 px-3 md:px-6 text-gray-900 md:text-white rounded hover:bg-gray-100 md:hover:bg-primaryHover border-r border-r-primaryHover">About <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg></button>
+                        <!-- Dropdown menu -->
+                        <div id="aboutDropdown" class="hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-md w-60 dark:bg-gray-700 dark:divide-gray-600">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="aboutDropdownLink">
+                                <li>
+                                    <a href="{% url 'about' about_type='aim-and-scope' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Aim and Scope</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'about' about_type='editorial-board' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Editorial Board</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'insights' %}#indexing" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Abstracting and Indexing</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'apc' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Article Processing Charges</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'publication-frequency' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Publication Frequency</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'about' about_type='news'  %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">News</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'about' about_type='announcements'  %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Announcements</a>
+                                </li> 
+                                <li>
+                                    <a href="{% url 'insights' %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Journal Insights</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <button id="archivesDropdownLink" data-dropdown-toggle="archivesDropdown" data-dropdown-trigger="hover" data-dropdown-offset-skidding="60" class="flex items-center justify-between w-full py-2 px-3 md:px-6 text-gray-900 md:text-white rounded hover:bg-gray-100 md:hover:bg-primaryHover border-r border-r-primaryHover">Archives <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg></button>
+                        <!-- Dropdown menu -->
+                        <div id="archivesDropdown" class="hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-md w-60 dark:bg-gray-700 dark:divide-gray-600">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="archivesDropdownLink">
+                                <li>
+                                    <a href="{% url 'archives'  %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Archives</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'articles-in-press'  %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Articles In-Press</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <button id="authorInfoLink" data-dropdown-toggle="authorInfo" data-dropdown-trigger="hover" data-dropdown-offset-skidding="20" class="flex items-center justify-between w-full py-2 px-3 md:px-6 text-gray-900 md:text-white rounded hover:bg-gray-100 md:hover:bg-primaryHover border-r border-r-primaryHover">Author Information <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg></button>
+                        <!-- Dropdown menu -->
+                        <div id="authorInfo" class="hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-md w-60 dark:bg-gray-700 dark:divide-gray-600">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="authorInfoLink">
+                                {% if policies %}
+                                    {% for policy in policies %}
+                                    <li>
+                                        <a href="{% url 'policy' url=policy.url  %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ policy.name }}</a>
+                                    </li>
+                                    {% endfor %}
+                                {% else %}
+                                    <li>
+                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">No Policies added yet</a>
+                                    </li>
+                                {% endif %}
+                                
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <button id="specialIssueLink" data-dropdown-toggle="specialIssue" data-dropdown-trigger="hover" data-dropdown-offset-skidding="40" class="flex items-center justify-between w-full py-2 px-3 md:px-6 text-gray-900 md:text-white rounded hover:bg-gray-100 md:hover:bg-primaryHover border-r border-r-primaryHover">Special Issues <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg></button>
+                        <!-- Dropdown menu -->
+                        <div id="specialIssue" class="hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-md w-60 dark:bg-gray-700 dark:divide-gray-600">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="specialIssueLink">
+                                <li>
+                                    <a href="{% url "special-issue-about" %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">About Special Issue</a>
+                                </li>
+                                <li>
+                                    <a href="{% url "special-issue-propose" %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Propose Special Issue</a>
+                                </li>
+                                <li>
+                                    <a href="{% url "special-issue-open" %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Open Special Issues</a>
+                                </li>
+                                <li>
+                                    <a href="{% url "special-issue-published" %}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Published Special Issues</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{% url 'submit-article' %}" class="block py-2 px-3 md:px-6 text-gray-900 bg-gray-50 md:bg-primaryHover md:text-white md:hover:bg-primaryHover border-l border-l-primaryHover border-r border-r-primaryHover submit-article" aria-current="page">Submit Article</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+

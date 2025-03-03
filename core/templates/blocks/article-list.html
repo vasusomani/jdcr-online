@@ -1,0 +1,44 @@
+{% load static %}
+<div class="mb-10">
+    <div class="flex justify-start items-center">
+        {{ article.article_type }} 
+        {% if article.is_open_access %}
+            <span class="text-sm ml-3 text-gray-500 flex items-center"><i data-feather="check-circle" class="text-green-600 w-3 mr-1"></i> Open Access</span>
+        {% endif %}
+        </div>
+    <div class="text-xl lg:text-2xl cursor-pointer underline-offset-4 hover:underline hover:text-primary transition-all duration-200" onclick="location.href='{% url "article" url=article.url %}'">{{ article.title }}</div>
+    <div class="mt-1 flex flex-wrap">
+        {% for author in article.authors.all %}
+            <div class="text-gray-500 author-link cursor-pointer underline-offset-4 hover:text-primary hover:underline" data-author-id="{{ author.id }}">
+                {% include "blocks/author-name.html" %}{% if not forloop.last %},&nbsp;
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    {% if not article.is_in_press and article.page_from and article.page_to  %}
+        <div class="mb-2">
+            Pages {{ article.page_from }} - {{ article.page_to }}
+        </div>
+    {% endif %}
+    {% if article.is_in_press and article.available_on %}
+        <div class="mb-2">
+            Available on {{ article.available_on|date:"d/m/Y" }}
+        </div>
+    {% endif %}
+    <div class="mt-3 flex justify-start items-center">
+        {% if article.pdf %}
+            {% comment %} <div data-article-id="{{ article.pk }}" class="download-pdf-modal-open mr-10 flex justify-start items-center text-cyan-700 cursor-pointer underline-offset-4 hover:underline">
+                <img alt="Loading Image..." src="{% static 'images/icons/pdf.png' %}" class="w-8 mr-2"> View PDF
+            </div> {% endcomment %}
+            <a href="{% if article.pdf %}{% url 'article-pdf-download' article_id=article.id %}{% else %}#{% endif %}" class="mr-10 flex justify-start items-center text-cyan-700 cursor-pointer underline-offset-4 hover:underline">
+                <img alt="Loading Image..." src="{% static 'images/icons/pdf.png' %}" class="w-8 mr-2"> View PDF
+            </a>
+        {% endif %}
+        {% if article.abstract %}
+            <div class="article-abstract-btn flex justify-start items-center cursor-pointer hover:text-primary underline-offset-4 hover:underline" data-article="{{ article.id }}">
+                Abstract <i data-feather="chevron-down"></i>
+            </div>
+        {% endif %}
+    </div>
+    <div id="article-abstract-block-{{ article.id }}"  class="mt-5 hidden">{{ article.abstract|safe }}</div>
+</div>

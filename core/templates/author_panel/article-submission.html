@@ -1,0 +1,38 @@
+{% extends "author_panel/panel_base.html" %}
+
+{% block pagetitle %}Article Submission{% endblock %}
+
+{% block content %}
+<div class="p-8 w-full">
+    <div class="text-2xl font-light">Article Submission</div>
+
+    {% if messages %}
+        <div class="py-5 w-full">{% include "_messages.html" %}</div>
+    {% endif %}
+
+    <form class="my-10 w-1/2" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="title" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Article Title</label>
+            <input type="title" id="title" name="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+        </div>
+        <div class="mb-4">
+            <label for="abstract" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Abstract</label>
+            <textarea id="abstract" name="abstract" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required></textarea>
+        </div>
+        <div class="mb-4">
+            <label for="keywords" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Keywords</label>
+            <input type="keywords" id="keywords" name="keywords" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+            <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Comma separated keywords.</p>
+        </div>
+        <div class="mb-4">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload Article</label>
+            <input name="article" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file" required>
+            <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Only PDF &amp; Doc files would be accepted. </div>
+        </div>
+        <div class="flex justify-end mb-6">
+            <button type="submit" class="text-white bg-primary hover:bg-primaryHover focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

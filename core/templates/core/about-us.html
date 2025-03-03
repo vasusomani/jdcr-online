@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+
+{% block pagetitle %}About Us {% endblock %}
+
+{% block content %}
+<div class="container min-h-screen">
+    <div class="grid grid-cols-1 lg:grid-cols-4 min-h-screen">
+        <div class="col-span-1 lg:border-r py-12 h-full">
+            <div class="mb-5 text-md flex justify-start items-center group underline-offset-4 hover:underline cursor-pointer hover:decoration-primary" onclick="location.href='{% url "about-us" %}'">
+                <i data-feather="chevron-right" class="text-primary"></i> About Us
+            </div>
+            <div class="mb-5 text-md flex justify-start items-center group underline-offset-4 hover:underline cursor-pointer hover:decoration-primary" onclick="location.href='{% url "contact-us" %}'">
+                <i data-feather="chevron-right" class="text-primary"></i> Contact Us
+            </div>
+            <div class="px-10">
+                {% include "blocks/ad-space-2.html" %}
+            </div>
+        </div>
+        <div class="col-span-1 lg:col-span-3 pb-20">
+            <div class="p-5 lg:p-12 border-b overflow-x-hidden w-screen">
+                <div class="block w-6 h-1 bg-primary"></div>
+                <h1 class="text-2xl mt-2 font-medium">About Us</h1>
+            </div>
+            <p class="p-5 lg:p-12">
+                {% if site_config.about_us %}
+                    {{ site_config.about_us|safe }}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

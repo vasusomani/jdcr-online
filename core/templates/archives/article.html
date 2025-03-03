@@ -1,0 +1,253 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load custom_tags %}
+
+{% block metatags %}
+<meta name="citation_issn" content="{{ journal.issn_online }}" />
+<meta name="citation_volume" content="{{ article.issue.volume.name|extract_numbers }}" />
+<meta name="citation_journal_title" content="{{ journal.name }}" />
+<meta name="citation_title" content="{{ article.title }}" />
+<meta name="citation_firstpage" content="{% if article.page_from %}{{ article.page_from }}{% else %}N/A{% endif %}" />
+<meta name="citation_lastpage" content="{% if article.page_to %}{{ article.page_to }}{% else %}N/A{% endif %}" />
+<meta name="citation_type" content="JOUR" />
+<meta name="citation_keyword" content="{{ article.keywords }}" />
+<meta name="citation_authors" content="{% if article.authors.all %}{% for author in article.authors.all %}{{ author.full_name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% else %}N/A{% endif %}" />
+<meta name="citation_fulltext_world_readable" content />
+<meta name="citation_doi" content="{% if article.doi %}{{ article.doi }}{% else %}N/A{% endif %}" />
+<meta name="dc.identifier" content="{% if article.doi %}{{ article.doi }}{% else %}N/A{% endif %}" />
+<meta name="citation_article_type" content="{{ article.article_type }}" />
+<meta property="og:description" content="{{ article.abstract|truncatewords_html:30}}" />
+<meta name="citation_publication_date" content="{{ article.published|date:'Y/m/d' }}" />
+<meta name="robots" content="INDEX,FOLLOW,NOARCHIVE,NOCACHE,NOODP,NOYDIR" />
+<link rel="canonical" href="{{ request.build_absolute_uri }}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:title" content="{{ article.title }}" />
+<meta property="og:description" content="{{ article.abstract|truncatewords_html:30 }}" />
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}/static/logo.png" />
+<meta property="keywords" content="{{ article.keywords }}" />
+<meta property="description" content="{{ article.abstract|truncatewords_html:30 }}" />
+
+<meta name="viewport" content="initial-scale=1" />
+{% endblock %}
+
+{% block pagetitle %}{{ article.title }}{% endblock %}
+
+{% block extrajs %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container py-10 min-h-screen mb-20">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-5 min-h-screen">
+        <div class="col-span-1 order-2 lg:order-1">
+            <div class="sticky top-48">
+                <div class="text-lg">Contents</div>
+                <ul class="mt-3">
+                    <li><a class="underline-offset-4 hover:underline text-cyan-700" href="#abstract">Abstract</a></li>
+                    {% if article.keywords %}
+                    <li><a class="underline-offset-4 hover:underline text-cyan-700" href="#keywords">Keywords</a></li>
+                    {% endif %}
+                    {% for section in article.sections.all|dictsort:"id" %}
+                    <li><a class="underline-offset-4 hover:underline text-cyan-700" href="#section-{{article.id}}-{{ section.id }}">{{ section.heading|title }}</a></li>
+                    {% endfor %}
+                    
+                </ul>
+
+                <button class="openModal w-full border-t py-3 text-lg mt-5 flex justify-start items-center text-primary underline-offset-4 hover:underline cursor-pointer" data-modal-id="citationModal">
+                    <img alt="Loading Image..." src="{% static 'images/icons/quote.png' %}" class="w-8 mr-2" /> Cite this article
+                </button>
+                
+                {% comment %} <div data-article-id="{{ article.pk }}" class="download-pdf-modal-open border-t py-3 text-lg flex justify-start items-center text-primary underline-offset-4 hover:underline cursor-pointer">
+                    <img src="{% static 'images/icons/pdf.png' %}" class="w-8 mr-2" alt="pdf"> Download PDF
+                </div>  {% endcomment %}
+
+                <a href="{% if article.pdf %}{% url 'article-pdf-download' article_id=article.id %}{% else %}#{% endif %}" class="border-t py-3 text-lg flex justify-start items-center text-primary underline-offset-4 hover:underline cursor-pointer">
+                    <img src="{% static 'images/icons/pdf.png' %}" class="w-8 mr-2" alt="pdf"> Download PDF
+                </a>
+
+                <a href="{% if article.xml %}{% url 'article-xml-download' article_id=article.id %}{% else %}#{% endif %}" class="border-t py-3 text-lg flex justify-start items-center text-primary underline-offset-4 hover:underline cursor-pointer">
+                    <img src="{% static 'images/icons/xml.png' %}" class="w-8 mr-2" alt="pdf"> Download XML
+                </a>
+
+                <div class="border-t py-3">
+                    <div class="">{{ article.views }} Views</div>
+                    <div class="">{{ article.downloads }} Downloads</div>
+                </div>
+                
+                <div class="mt-5 text-gray-500">Share this article</div>
+                <div class="mt-2 flex flex-wrap items-center space-x-3">
+                    <div class="cursor-pointer">
+                        <img alt="Loading Image..." src="{% static 'images/icons/share.png' %}" class="w-8"/>
+                    </div>
+                    <a href="https://www.facebook.com/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener noreferrer">
+                        <img alt="Loading Image..." src="{% static 'images/icons/facebook.png' %}" class="w-8"/>
+                    </a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}" target="_blank" rel="noopener noreferrer">
+                        <img alt="Loading Image..." src="{% static 'images/icons/linkedin.png' %}" class="w-8"/>
+                    </a>
+                    <div class="cursor-pointer">
+                        <img alt="Loading Image..." src="{% static 'images/icons/twitter.png' %}" class="w-8"/>
+                    </div>
+
+                    <div>
+                        {% include "blocks/ad-space-2.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 lg:col-span-3 order-1 lg:order-2">
+            <div class="">
+                <span class="font-medium">{{ article.article_type }}</span> | 
+                {% if article.is_in_press %}
+                <span class="text-gray-500">Article is In-Press</span>
+                {% else %}
+                <span class="text-gray-500">{{ article.issue.volume.name }} {{ article.issue.name }} ({{ article.issue.month }}, {{ article.issue.volume.year }}) {% if article.page_from and article.page_to %} | Pages {{ article.page_from }} - {{ article.page_to}}{% endif%}</span>
+                {% endif %}
+            </div>
+            <div class="text-xl lg:text-3xl font-medium text-gray-700">{{ article.title }}</div>
+            <div class="mt-1 flex flex-wrap space-x-3">
+                {% for author in authors %}
+                    <div class="cursor-pointer hover:text-primary underline-offset-4 hover:underline flex items-center">
+                        <div class="author-link font-medium text-black hover:text-primary" data-author-id="{{ author.id }}">{{ author.full_name }}</div>
+                        {% if author.author_affiliation_id %}
+                        <div class="ml-1 author-link" data-author-id="{{ author.id }}">
+                            <sup>{{ author.author_affiliation_id }}</sup>
+                        </div>
+                        {% endif %}
+                        {% if author.orcid_id %}
+                        <a href="https://orcid.org/{{author.orcid_id}}" class="ml-1 flex items-center justify-start space-x-1 mt-1" target="_blank">
+                            <img alt="Loading Image..." src="{% static 'images/orcid_128x128.webp' %}" class="w-4" />
+                        </a>
+                        {% endif %}
+                        {% if author.email %}<i data-feather="mail" class="h-4 author-link" data-author-id="{{ author.id }}"></i>{% endif %}
+                    </div>
+                    {% if not forloop.last %}&nbsp;, {% endif %}
+                {% endfor %}
+            </div>
+            <div class="mt-5 text-sm text-gray-500">
+                {% for key, val in affiliations.items %}
+                    {% if key %}
+                    <div class="flex space-x-3">
+                        <div class="text-black"><sup>{{ val }}</sup></div>
+                        <div class="text-black">{{ key }}</div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="border-t-2 border-t-gray-800 border-b border-b-gray-300 mt-5 py-3 space-y-2">
+                <div class="flex justify-between items-center">
+                    <div class="flex">Under a Creative Commons <a href="https://creativecommons.org/licenses/by/4.0/" class="ml-1 flex items-center justify-start text-cyan-700 underline-offset-4 hover:underline">license <i data-feather="arrow-up-right" class="w-5"></i></a></div>
+                    {% if article.is_open_access %}
+                        <span class="text-sm text-gray-500 flex items-center"><i data-feather="check-circle" class="text-green-600 w-3 mr-1"></i> Open Access</span>
+                    {% endif %}
+                </div>
+                {% if article.doi and article.doi != '-' %}
+                <div class="text-md">
+                    <span class="">DOI</span> : <a class="text-cyan-700 underline-offset-4 hover:underline hover:text-cyan-800 cursor-pointer" href="{{ article.doi_link }}" target="_blank">{{ article.doi }}</a>
+                </div>
+                {% endif %}
+                {% if article.pmid and article.pmid != '-' %}
+                <div class="text-md">
+                    <span class="">PMID</span> : <a class="text-cyan-700 underline-offset-4 hover:underline hover:text-cyan-800 cursor-pointer" href="{{ article.pmid_link }}" target="_blank">{{ article.pmid }}</a>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if article.is_in_press and article.available_on %}
+            <div class="flex justify-center items-center py-3 text-primary">
+                Available On {{ article.available_on|date:"d/m/Y" }}
+            </div>
+            {% elif not article.is_in_press %}
+            <div class="mt-2 grid grid-cols-2 lg:grid-cols-4">
+                {% if article.received %}
+                <div class="col-span-1">
+                    <div class="flex flex-col justify-center items-center">
+                        <div class="font-medium">Received</div>
+                        <div class="font-light">{{ article.received }}</div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if article.revised %}
+                <div class="col-span-1">
+                    <div class="flex flex-col justify-center items-center">
+                        <div class="font-medium">Revised</div>
+                        <div class="font-light">{{ article.revised }}</div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if article.accepted %}
+                <div class="col-span-1">
+                    <div class="flex flex-col justify-center items-center">
+                        <div class="font-medium">Accepted</div>
+                        <div class="font-light">{{ article.accepted }}</div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if article.published %}
+                <div class="col-span-1">
+                    <div class="flex flex-col justify-center items-center">
+                        <div class="font-medium">Published</div>
+                        <div class="font-light">{{ article.published }}</div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="mt-10 anchor" id="abstract">
+                <div class="text-xl font-medium">Abstract</div>
+                <div class="mt-2 text-justify">{{ article.abstract|safe }}</div>
+            </div>
+
+            {% if article.keywords %}
+            <div class="mt-10 anchor" id="keywords">
+                <div class="text-xl font-medium">Keywords</div>
+                <div class="mt-2 flex flex-wrap gap-2">
+                    {% for k in keywords %}
+                        <div data-word="{{ k|lower }}" class="keyword-search bg-gray-100 text-sm font-bold text-gray-500 px-3 py-1 cursor-pointer transition-all duration-150 hover:bg-sky-700 hover:text-white">{{ k|capfirst }}</div>
+                    {% endfor %}
+                </div>
+            </div> 
+            {% endif %}
+
+            {% for section in article.sections.all|dictsort:"id" %}
+                <div class="mt-10 anchor" id="section-{{article.id}}-{{ section.id }}">
+                    <div class="text-xl font-medium">{{ section.heading }}</div>
+                    <div class="mt-2 tinymce-content text-justify">{{ section.content|safe }}</div>
+                </div>
+            {% endfor %}
+            
+            {% comment %} 
+            <div class="mt-10 anchor" id="how-to-cite">
+                <div class="text-xl font-medium">How to Cite</div>
+                <div class="mt-2">{{ article.how_to_cite|safe }}</div>
+            </div> {% endcomment %}
+
+            {% include "blocks/ad-space-1.html" %}
+
+            <!-- Recommended Articles -->
+            <div class="text-3xl border-t pt-5 mt-10 text-primary ">Recommended Articles</div>
+            <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-5">
+                {% for article in recommended %}
+                    <div class="col-span-1">
+                        {% include "blocks/article-box.html" %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block customjs %}
+{{ block.super }}
+<script>
+    $( document ).ready(function() {
+        const clipboard = new Clipboard('.citations-copy');
+    });
+</script>
+{% endblock %}

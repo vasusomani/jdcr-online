@@ -1,0 +1,61 @@
+{% load compress %} 
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block pagetitle %}{% endblock %} | The Journal of Heart Valve Disease</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+    {% endcompress %}
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WL6MVDESP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0WL6MVDESP');
+    </script>
+  </head>
+ 
+  <body class="scroll-smooth">
+
+    <div class="w-screen h-screen overflow-x-auto lg:overflow-hidden">
+      {% include "author_panel/panel_navbar.html" %} 
+      <div class="flex overflow-hidden h-full">
+        {% include "author_panel/left-nav.html" %}
+        <div class="shadow-2xl content overflow-y-auto w-full h-full">
+          {% if not request.user.is_superuser and not request.user.is_email_verified %}
+            {% include "author_panel/email-unverified.html" %}
+          {% else %}
+            {% block content %} {% endblock content %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+
+    {% block customjs %}
+    <script>
+      feather.replace();
+    </script>
+    {% endblock customjs%}
+  </body>
+</html>

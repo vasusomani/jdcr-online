@@ -1,0 +1,61 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block pagetitle %}{{ volume.name }} {{ issue.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-10 min-h-screen">
+    <div class="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-10 min-h-screen">
+        <div class="col-span-1">
+            <div class="lg:sticky lg:top-48">
+                <div class="text-xl lg:text-2xl lg:text-right">{{ volume.name }} {{ issue.name }}</div>
+                <div class="lg:text-right">{{ issue.month }} {{ volume.year }}</div>
+                <div class="lg:hidden text-2xl font-medium">{{ issue.title }}</div>
+                {% if issue.thumbnail %}
+                <div class="lg:flex lg:justify-end mt-5">
+                    <img alt="Loading Image..." src="{{ issue.thumbnail.url }}" class="w-60"/>
+                </div>
+                {% endif %}
+                {% if issue.is_published %}
+                <div class="lg:flex lg:justify-end lg:items-end lg:flex-col text-primary">
+                    <div class="mt-5 text-xl font-medium">Published</div>
+                    {{ issue.published|date:"d/m/Y" }}
+                </div>
+                {% else %}
+                    <div class="lg:flex lg:justify-end lg:items-end lg:flex-col text-red-500">
+                        <div class="mt-5 text-xl font-medium">Submission Deadline</div>
+                        {{ issue.submission_deadline|date:"d/m/Y" }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-span-1 lg:col-span-2">
+            <div class="hidden lg:block font-medium text-xl lg:text-4xl">{{ issue.title }}</div>
+            <div class="text-gray-500 mt-5">{{ issue.about|safe }}</div>
+            <div class="mt-5 bg-primary p-10 text-light">
+                <div class="font-medium text-xl">Guest Editor</div>
+                {% for ge in issue.guest_editors.all %}
+                <div class="mt-3 grid grid-cols-12 gap-5">
+                    <div class="col-span-1">
+                        <img alt="Loading Image..." src="{% static 'images/icons/user.png' %}" />
+                    </div>
+                    <div class="col-span-11">
+                        <div class="font-medium">{{ ge.name }}</div>
+                        <div class="">{{ ge.affiliation }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="mt-5">
+                {% if articles %}
+                {% for article in articles %}
+                    {% include "blocks/article-list.html" %}
+                {% endfor %}
+                {% else %}
+                    <div class="">No Articles</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

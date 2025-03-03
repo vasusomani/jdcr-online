@@ -1,0 +1,11 @@
+{% load static %}
+<div class="flex flex-col justify-center items-center py-5">
+    {% if editor.image %}
+        <img src="{{ editor.image.url }}" class="w-32 h-32 rounded-full" alt="Loading image...">
+    {% else %}
+        <img src="{% static 'images/icons/user.png' %}" class="w-32 h-32 rounded-full" alt="Loading image...">
+    {% endif %}
+    <div class="text-xl lg:text-2xl">{{ editor.name }}</div>
+    <div class="">{{ editor.qualification }}</div>
+    <div class="text-sm text-center">{% if editor.designation %}{{ editor.designation }} at {% endif %}{{ editor.institution }}</div>
+</div>

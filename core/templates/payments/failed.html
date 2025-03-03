@@ -1,0 +1,13 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block pagetitle %}Payment Failed{% endblock %}
+
+{% block content %}
+<div class="flex flex-col justify-center items-center" style="min-height: 60vh">
+    <img alt="Loading Image..." src="{% static 'images/icons/payment-failed.png' %}" class="w-48"/>
+    <div class="text-3xl mt-3">Payment Failed</div>
+    <div class="text-gray-500 mt-3 text-center max-w-sm">There was an issue while verifying your payment. You can try paying again</div>
+    <a href="{% url 'payments' %}" class="text-center text-blue-500 hover:underline mt-5">Try paying again</a>
+</div>
+{% endblock %}

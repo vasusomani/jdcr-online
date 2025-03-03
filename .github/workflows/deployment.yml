@@ -1,0 +1,19 @@
+name: Deploy prod using remote ssh
+
+on: 
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: DEPLOYMENT
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using ssh-key
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: 22
+        script: bash deploy.sh jdcronline jdcronline-service

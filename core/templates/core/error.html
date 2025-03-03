@@ -1,0 +1,16 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block pagetitle %}Page Not Found {% endblock %}
+
+{% block content %}
+<div class="h-screen w-screen">
+    <div class="flex justify-center items-center flex-col">
+        <img alt="Loading Image..." src="{% static 'images/icons/404.svg' %}" class="w-full lg:w-1/4"/>
+        <div class="lg:text-2xl font-light">Oops, page you requested was not found!<div>
+        <div class="flex justify-center items-center">
+            <div onclick="javascript:history.go(-1)" class="inline-block bg-gray-900 px-10 py-2 rounded-md mt-5 text-light text-center text-sm cursor-pointer">Go Back</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

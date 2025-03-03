@@ -1,0 +1,34 @@
+<div id="citationModal" class="modal z-20">
+  <!-- Modal content -->
+  <div class="modal-content max-w-screen-md rounded-lg bg-white">
+    <div class="flex justify-start items-center">
+      <div class="flex-grow text-xl">Cite</div>
+      <span
+        class="closeModal text-lg cursor-pointer font-medium text-red-500"
+        data-modal-id="citationModal"
+        >x</span
+      >
+    </div>
+
+    <div class="mt-5 mb-2 grid grid-cols-1 md:grid-cols-12 text-sm">
+      <div class="col-span-1 md:col-span-3 font-medium">APA</div>
+      <div class="col-span-1 md:col-span-9">{{ article.apa|safe }}</div>
+    </div>
+    <div class="mb-2 grid grid-cols-1 md:grid-cols-12 text-sm border-t py-2">
+      <div class="col-span-1 md:col-span-3 font-medium">MLA</div>
+      <div class="col-span-1 md:col-span-9">{{ article.mla|safe }}</div>
+    </div>
+    <div class="mb-2 grid grid-cols-1 md:grid-cols-12 text-sm border-t py-2">
+      <div class="col-span-1 md:col-span-3 font-medium">Chicago</div>
+      <div class="col-span-1 md:col-span-9">{{ article.chicago|safe }}</div>
+    </div>
+    <div class="mb-2 grid grid-cols-1 md:grid-cols-12 text-sm border-t py-2">
+      <div class="col-span-1 md:col-span-3 font-medium">Harvard</div>
+      <div class="col-span-1 md:col-span-9">{{ article.harvard|safe }}</div>
+    </div>
+    <div class="mb-2 grid grid-cols-1 md:grid-cols-12 text-sm border-t py-2">
+      <div class="col-span-1 md:col-span-3 font-medium">Vancouver</div>
+      <div class="col-span-1 md:col-span-9">{{ article.vancouver|safe }}</div>
+    </div>
+  </div>
+</div>

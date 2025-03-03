@@ -1,0 +1,39 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block pagetitle %}{% include "blocks/author-name.html" %}'s Publications{% endblock %}
+
+{% block content %}
+<div class="container py-5 lg:py-10 mb-20">
+    <div class="grid grid-cols-1 lg:grid-cols-3">
+        <div class="col-span-1 lg:border-r">
+            <div class="text-2xl lg:text-4xl font-light">
+                {% include "blocks/author-name.html" %}
+            </div>
+            {% if author.affiliation %}
+                <div class="ml-1">
+                    {{ author.affiliation}}
+                </div>
+            {% endif %}
+            {% if author.email %}
+                <div class="flex justify-start items-center text-primary">
+                    <span><i data-feather="mail" class="h-4"></i></span> 
+                    <span>{{author.email}}</span>
+                </div>
+            {% endif %}
+            {% if author.orcid_id %}
+                <a href="https://orcid.org/{{author.orcid_id}}" class="flex items-center justify-start space-x-1 mt-1 group underline-offset-4 hover:underline" target="_blank">
+                    <img alt="Loading Image..." src="{% static 'images/orcid_128x128.webp' %}" class="w-4" />
+                    <div class="text-sm">View ORCID profile</div>
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-span-1 lg:col-span-2 lg:pl-5">
+            <div class="pb-5 text-2xl text-primary">{{count}} Publication{% if count > 1 %}s{% endif %}</div>
+            {% for article in articles %}
+                {% include "blocks/article-list.html" %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

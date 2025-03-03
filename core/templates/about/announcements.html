@@ -1,0 +1,11 @@
+{% if announcements %}
+{% for a in announcements %}
+<div class="block border-b p-5 lg:p-12" id="announcements{{ a.id }}">
+    <div class="">{{ a.created_on|date:"j M, Y" }}</div>
+    <div class="mt-2 font-medium">{{ a.heading }}</div>
+    <div class="mt-2">{{ a.content|safe }}</div>
+</div>
+{% endfor %}
+{% else %}
+<div class="text-gray-500 p-5 lg:p-12">No Announcements but stay tuned!.</div>
+{% endif %}

@@ -1,0 +1,64 @@
+{% extends "author_panel/panel_base.html" %}
+
+{% block pagetitle %}Articles{% endblock %}
+
+{% block content %}
+<div class="p-8">
+    <div class="text-2xl font-light">Articles</div>
+
+
+    {% if articles %}
+    <div class="relative overflow-x-auto my-10">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-primary">
+                        MRN
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-primary">
+                        Title
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-primary">
+                        Status
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-primary">
+                        Submitted on
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-primary">
+                        Payment Status
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <a href="{% url 'author-article-details' mrn=article.mrn %}" class="text-primary underline hover:text-primaryHover">{{ article.mrn }}</a>
+                    </th>
+                    <td class="px-6 py-4"  width="50%">
+                        {{ article.title }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ article.status }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ article.submitted_at|date:"d M, Y" }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {% if article.status == "ACCEPTED" and article.payment_status == "PENDING" %}
+                        <div class="px-10 py-3 bg-primary text-center text-light cursor-pointer rounded text-md" onclick="location.href='{% url "payment" %}'">Pay Now</div>
+                        {% else %}
+                        <div class="text-center">{{ article.payment_status }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    You have not added any articles yet.
+    {% endif %}
+
+</div>
+{% endblock %}

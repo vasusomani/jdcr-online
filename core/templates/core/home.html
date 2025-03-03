@@ -1,0 +1,186 @@
+{% extends "_base.html" %}
+
+{% block pagetitle %}Home {% endblock %}
+
+{% block extraCSS %}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 lg:mt-10">
+    <div class="grid grid-cols-1 md:grid-cols-4 md:gap-10">
+        <div class="col-span-1 md:col-span-3">
+            <div class="grid grid-cols-1 md:grid-cols-4">
+                <div class="col-span-1 px-5">
+                    {% if journal.thumbnail %}
+                        <img alt="Loading Image..." src="{{ journal.thumbnail.url }}" class="w-full">
+                    {% endif %}
+                </div>
+                <div class="col-span-1 md:col-span-3">
+                    <h2 class="text-2xl">About the journal</h2>
+                    <div>ISSN (Print): {{ journal.issn_print }}</div>
+                    <div>ISSN (Online): {{ journal.issn_online }}</div>
+                    {% if journal.abbreviation %}
+                    <div>Abbreviation: {{ journal.abbreviation }}</div>
+                    {% endif %}
+                    {% if journal.subjects %}
+                    <div>Disciplines: {{ journal.subjects }}</div>
+                    {% endif %}
+                    <div class="my-3">
+                        {{ journal.about|safe|truncatewords_html:50 }}
+                        <div class="mt-3 inline-flex items-center underline-offset-4 hover:underline cursor-pointer text-primary" onclick="location.href='{% url "about" about_type="aim-and-scope"  %}'">
+                            <div>Read aim &amp; scope</div>
+                            <i data-feather="arrow-up-right" class="w-4 text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="flex justify-start items-center space-x-5">
+                        {% if journal.cite_score %}
+                        <div class="border border-primary flex justify-start items-center space-x-5 text-sm cursor-pointer" onclick="location.href='{% if journal.cite_score_link %}{{ journal.cite_score_link }}{% else %}#{% endif %}'">
+                            <div class="px-3 py-2">CiteScore</div>
+                            <div class="px-3 py-2 bg-primary text-light">{{ journal.cite_score }}</div>
+                        </div>
+                        {% endif %}
+                        {% if journal.impact_factor %}
+                        <div class="border border-primary flex justify-start items-center space-x-5 text-sm cursor-pointer" onclick="location.href='{% if journal.impact_factor_link %}{{ journal.impact_factor_link }}{% else %}#{% endif %}'">
+                            <div class="px-3 py-2">Impact Score</div>
+                            <div class="px-3 py-2 bg-primary text-light">{{ journal.impact_factor }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1">
+            <div class="p-5 bg-gray-100">
+                <div class="journalRankingSlick w-full">
+                    {% for jr in journal_rankings %}
+                    <a href="{% if jr.link %}{{ jr.link }}{% else %}#{% endif %}" target="_blank">
+                        <img src="{{ jr.image.url }}" class="w-full"/>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="bg-primary text-light">
+    <div class="container py-12 mt-5 lg:mt-20">
+        <div class="grid grid-cols-2 lg:grid-cols-5">
+            {% if journal.acceptance_rate %}
+            <div class="col-span-1 border-l-2 border-l-primaryHover px-5 py-2">
+                <div class="text-3xl">{{ journal.acceptance_rate }}%</div>
+                <div class="text-gray-300">Acceptance Rate</div>
+            </div>
+            {% endif %}
+            {% if journal.first_decision %}
+            <div class="col-span-1 border-l-2 border-l-primaryHover px-5 py-2">
+                <div class="text-3xl">{{ journal.first_decision }} days</div>
+                <div class="text-gray-300">Time to first decision</div>
+            </div>
+            {% endif %}
+            {% if journal.review_time %}
+            <div class="col-span-1 border-l-2 border-l-primaryHover px-5 py-2">
+                <div class="text-3xl">{{ journal.review_time }} days</div>
+                <div class="text-gray-300">Review time</div>
+            </div>
+            {% endif %}
+            {% if journal.acceptance_to_publication %}
+            <div class="col-span-1 border-l-2 border-l-primaryHover px-5 py-2">
+                <div class="text-3xl">{{ journal.acceptance_to_publication }} days</div>
+                <div class="text-gray-300">Acceptance to publication</div>
+            </div>
+            {% endif %}
+            <div class="col-span-2 lg:col-span-1 border-l-2 lg:border-l-primary px-5 py-2 hover:text-light group cursor-pointer"  onclick="location.href='{% url "insights" %}'">
+                <div class="flex h-full justify-start items-center text-xl"><i data-feather="arrow-right-circle" class="w-10 h-10 stroke-1 rounded-full bg-primary group-hover:bg-primaryHover text-white mr-2"></i>View all insights</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if indexings %}
+<div class="mt-10 container">
+    <div class="homeIndexingsSlick flex items-center">
+        {% for index in indexings %}
+        {% if index.image %}
+        <div class="p-5 h-32 flex items-center justify-center cursor-pointer" onclick="location.href='{% if index.link %}{{ index.link }}{% else %}#{% endif %}'">
+            <img src="{{ index.image.url }}" class="w-full"/>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+
+<div class="mt-10">
+    <div class="container py-10"> 
+        <div class="block w-6 h-1 bg-primary"></div>
+        <div class="text-2xl mt-2">Latest Published Articles</div>
+
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-5">
+        {% for article in latest_published %}
+            <div class="col-span-1">
+                {% include "blocks/article-box.html" %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="container mt-10 lg:mt-20">
+    <div class="block w-6 h-1 bg-primary"></div>
+    <div class="text-2xl mt-2">Most Read</div>
+
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-5">
+        {% for article in most_popular %}
+        <div class="col-span-1">
+            {% include "blocks/article-box.html" %}
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+<div class="border-t mt-10 lg:mt-20">
+    <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            <div class="col-span-1 pt-10 pb-20 md:pr-10 md:border-r">
+                <div class="block w-6 h-1 bg-primary"></div>
+                <div class="text-2xl mt-2">News</div>
+                {% if news %}
+                {% for item in news %}
+                    <div class="mt-5">
+                        <div class="text-gray-500">{{ item.created_on|date:"jS M, Y" }}</div>
+                        <div class="text-xl cursor-pointer underline-offset-4 hover:underline hover:text-cyan-700" onclick="location.href='{% url "about" about_type="news" %}'">{{ item.heading }}</div>
+                    </div>
+                {% endfor %}
+                {% else %}
+                <div class="text-gray-500">No News</div>
+                {% endif %}
+            </div>
+
+            <div class="col-span-1 pt-10 pb-20 md:pl-10">
+                <div class="block w-6 h-1 bg-primary"></div>
+                <div class="text-2xl mt-2">Announcements</div>
+                {% if announcements %}
+                {% for item in announcements %}
+                    <div class="mt-5">
+                        <div class="text-gray-500">{{ item.created_on|date:"jS M, Y" }}</div>
+                        <div class="text-xl cursor-pointer underline-offset-4 hover:underline hover:text-cyan-700" onclick="location.href='{% url "about" about_type="announcements" %}'">{{ item.heading }}</div>
+                    </div>
+                {% endfor %}
+                {% else %}
+                <div class="text-gray-500">No Announcements</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

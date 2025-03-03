@@ -1,0 +1,90 @@
+{% extends "_base.html" %}
+
+{% block pagetitle %}Propose a Special Issues{% endblock %}
+
+{% block content %}
+<div class="container min-h-screen">
+    <div class="grid grid-cols-1 lg:grid-cols-4 min-h-screen">
+        <div class="col-span-1 lg:border-r py-12 h-full">
+            {% include "archives/special-issue/sidebar.html" %}
+        </div>
+        <div class="col-span-3 h-full">
+            <div class="p-5 lg:p-12 border-b overflow-x-hidden w-screen">
+                <div class="block w-6 h-1 bg-primary"></div>
+                <div class="text-2xl mt-2 font-medium">Propose a Special Issue</div>
+            </div>
+            <div class="p-5 lg:p-12">
+                <span class="font-medium">{{ journal.name }}</span> publishes Special Issues, which are dedicated collections of articles that highlight emerging areas of research within a field or provide an opportunity for in-depth investigation of an existing research topic.
+                <br><br>
+                As the Lead Guest Editor of a Special Issue, you can play a significant role in scientific communication by encouraging further research in important areas while gaining editorial experience and enhancing your academic profile. There are several additional benefits to being a Guest Editor.
+                <br><br>
+                The following sections will guide you in writing and submitting a proposal for a Special Issue and help you understand the responsibilities as a Lead Guest Editor or Guest Editor if your proposal is approved.
+
+                <div class="mt-5 font-medium text-2xl">Choosing a Topic</div>
+                Select a topic that aligns with your own research interests. The topic should be of increasing interest within your field. If you have noticed a surge in interest in a particular subject at recent conferences, for example, it indicates that a related proposal will generate significant interest.
+                <br><br>
+                Ensure that the topic of your proposal falls within the scope of <span class="font-medium">{{ journal.name }}</span>. The scope of your Special Issue should be broad enough to attract a reasonable number of submissions but narrow enough to create a cohesive collection of articles. The Special Issue should cover a specific area of the journal’s scope, but not the entire scope.
+                <br><br>
+                We strongly recommend reviewing the open Special Issues in the journal before submitting your proposal. This will provide an understanding of the level of specificity we seek in Special Issue topics and ensure there is no overlap with any currently open Issues.
+
+                <div class="mt-5 font-medium text-2xl">Preparing a Call for Papers</div>
+                Your Special Issue proposal should be in the form of a Call for Papers, which will be submitted to the Managing Editor for assessment. If the proposal is approved, the Call for Papers will help researchers find the Special Issue and submit their manuscripts.
+                <br><br>
+                The Call for Papers should provide sufficient background information to attract submissions but does not need to be overly detailed. Concise proposals are more likely to catch the attention of qualified researchers, leading to higher quality submissions. Clearly and efficiently communicate the focus of the Issue in no more than 500 words.
+                <br><br>
+                We recommend examining the structure and level of detail in the open Special Issues before submitting your proposal to ensure alignment.
+                <br><br>
+                Structure your proposal using the following guide:
+                <ul class="list-disc list-inside space-y-1">
+                    <li>Provide a succinct but descriptive title for your Special Issue in no more than 10 words. Avoid phrases like “recent advances in…” or “new insights into…” and avoid phrasing the title as a question.</li>
+                    <li>In one or two short paragraphs, briefly summarize your chosen topic and its relevance within the broader subject.</li>
+                    <li>In another paragraph, explain the main challenges faced by research in your chosen topic.</li>
+                    <li>In the final paragraph, outline your proposed aims and summarize the scope of the Special Issue. Specify the types of studies you aim to attract, such as original research and review articles. You can “encourage” or “especially welcome” submissions on specific concepts.</li>
+                    <li>Finally, propose a list of ten to fifteen bullet-point topics that you expect to receive submissions on. These topics will guide authors on areas they can contribute to. Each topic should provide more detail than just a few keywords and should be directly linked to the scope of your proposed Issue.</li>
+                </ul>
+                Ensure that the text and topics explicitly relate to the narrower scope of the Special Issue. Broad descriptions covering the entire scope of the journal are not suitable.
+
+                <div class="mt-5 text-2xl font-medium">Recruiting an Editorial Team</div>
+                Special Issues require a dedicated team consisting of a Lead Guest Editor and 2 to 5 Guest Editors. Guest Editors play a vital role in the success of a Special Issue and are responsible for:
+                <ul class="list-disc list-inside space-y-1">
+                    <li>Managing the peer review process for submitted manuscripts</li>
+                    <li>Making final decisions on submitted manuscripts</li>
+                </ul>
+                <br>
+                The Lead Guest Editor serves as the primary point of contact throughout the Special Issue, from the proposal submission to the peer review of manuscripts. In addition to editorial tasks, the Lead Guest Editor’s responsibilities include:
+                <ul class="list-disc list-inside space-y-1">
+                    <li>Collaborating with the Content Development team during the proposal assessment and addressing any requested revisions</li>
+                    <li>Communicating with the Guest Editor team during the proposal assessment and beyond</li>
+                    <li>Assigning submitted manuscripts to the most suitable Guest Editor based on their expertise</li>
+                    <li>Once all manuscripts have completed the peer review process, the Guest Editor team is requested to write an Editorial that introduces the Special Issue.</li>
+                </ul>
+                <br>
+                In your proposal, please provide the full names and affiliations of researchers who are willing to serve as Guest Editors. All suggested Guest Editors undergo a routine screening and verification process. It is important to suggest colleagues with a strong publication record within the scope of the proposed topic to ensure they meet our criteria.
+                <br><br>
+                If any suggested Guest Editors do not meet our criteria, <span class="font-medium">{{ journal.name }}</span> reserves the right to request their removal or replacement.
+                <br><br>
+                The Guest Editor team should include individuals from different institutions and countries. This diversity helps prevent conflicts of interest and ensures a broader reach for the Special Issue.
+                <br><br>
+                It is also essential that all Guest Editors have sufficient time to commit to handling manuscripts throughout the Special Issue.
+                <br><br>
+
+                <div class="mt-5 text-2xl font-medium">Assessment and Approval of Special Issues</div>
+                The Managing Editor, along with one or two members of the Editorial Board, conducts initial checks on submitted proposals to ensure they meet the requirements in terms of detail, structure, and focus. They also assess the expertise and diversity of the Guest Editor team. Revisions to the proposal may be requested before further consideration.
+                <br><br>
+                The final approval of any proposal rests with the Editor-in-Chief. <span class="font-medium">{{ journal.name }}</span> reserves the right to decline any Special Issue at any time and for any reason at its sole discretion.
+                <br><br>
+                Typically, the assessment by the Editorial Board and the Editor-in-Chief takes two to four weeks from the submission of your proposal.
+                <br><br>
+                How to submit a proposal for a Special Issue:
+                <br><br>
+                To submit a proposal for a Special Issue, please follow these steps:
+                <ul class="list-disc list-inside space-y-1">
+                    <li>Compile your proposal as a single PDF file.</li>
+                    <li>Send the PDF file as an email attachment to the Managing Editor at managingeditor@azpharmjournal.com.</li>
+                    <li>Please ensure that your proposal is in PDF format and attached to the email when submitting it to the Managing Editor.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

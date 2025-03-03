@@ -1,0 +1,16 @@
+{% extends "_base.html" %}
+
+{% block pagetitle %}"{{ query }}"{% endblock %}
+
+{% block content %}
+<div class="container py-5 lg:py-10 mb-20 min-h-screen">
+    <div class="text-2xl lg:text-4xl font-light">Results for "{{ query }}"</div>
+    <div class="text-gray-500">Found {{ count }} results</div>
+
+    <div class="mt-10">
+    {% for article in articles %}
+        {% include "blocks/article-list.html" %}
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
