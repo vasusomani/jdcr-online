@@ -89,7 +89,7 @@ local_settings.py
 db.sqlite3
 venv
 node_modules
-media
-/static
+# media
+# /static
 CACHE
-core/templates/google_tags
+# core/templates/google_tags
