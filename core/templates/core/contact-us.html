@@ -21,11 +21,13 @@
                 <div class="block w-6 h-1 bg-primary"></div>
                 <h1 class="text-2xl mt-2 font-medium">Contact Us</h1>
             </div>
-            <p class="p-5 lg:p-12">
-                {% if site_config.contact_us %}
-                    {{ site_config.contact_us|safe }}
-                {% endif %}
-            </p>
+                <div class="pl-5 sm:pl-10 md:pl-16 lg:pl-24 xl:pl-32">
+                <p class="p-5 lg:p-12">
+                    {% if site_config.contact_us %}
+                        {{ site_config.contact_us|safe }}
+                    {% endif %}
+                </p>
+            </div>
         </div>
     </div>
 </div>

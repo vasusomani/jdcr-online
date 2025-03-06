@@ -8,34 +8,40 @@
 strong {
   font-weight: 600 !important;
 }
+
 table {
   margin: 20px 0px !important;
 }
+
 table,
 th,
 td {
   border: 1px dashed #ccc !important;
 }
+
 th {
   font-weight: 500 !important;
 }
+
 th,
 td {
   padding: 10px !important;
 }
 
-.tinymce-content > ol li {
+.tinymce-content>ol li {
   list-style: decimal;
   list-style-position: inside;
 }
 
-.tinymce-content > ul li {
+.tinymce-content>ul li {
   list-style-type: disc;
   list-style-position: inside;
 }
+
 .tinymce-content a {
   color: #3081d0 !important;
 }
+
 .tinymce-content a:hover {
   text-decoration: underline;
 }
@@ -96,5 +102,6 @@ td {
 
 /* Hide thin navbar on scroll */
 .thin-navbar.hidden {
-  top: -100px; /* Adjust as needed */
+  top: -100px;
+  /* Adjust as needed */
 }

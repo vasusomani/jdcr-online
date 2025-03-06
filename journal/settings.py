@@ -19,6 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv("DJANGO_SECRET")
 DEBUG = True if os.getenv("DJANGO_DEBUG").lower() == "true" else False
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv("DJANGO_TRUSTED_HOSTS").split(",")
 AUTH_USER_MODEL = "core.User"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 X_FRAME_OPTIONS = "SAMEORIGIN"
